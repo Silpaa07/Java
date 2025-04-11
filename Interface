@@ -1,0 +1,51 @@
+// Define an interface
+interface Animal {
+    // Abstract method (does not have a body)
+    void sound();
+
+    // Abstract method
+    void eat();
+}
+
+// A class implementing the interface
+class Dog implements Animal {
+    // Providing implementation for the sound method
+    @Override
+    public void sound() {
+        System.out.println("Bark");
+    }
+
+    // Providing implementation for the eat method
+    @Override
+    public void eat() {
+        System.out.println("Dog is eating");
+    }
+}
+
+// Another class implementing the interface
+class Cat implements Animal {
+    // Providing implementation for the sound method
+    @Override
+    public void sound() {
+        System.out.println("Meow");
+    }
+
+    // Providing implementation for the eat method
+    @Override
+    public void eat() {
+        System.out.println("Cat is eating");
+    }
+}
+
+// Main class to test the interface
+public class Main {
+    public static void main(String[] args) {
+        Animal dog = new Dog();  // Create an instance of Dog
+        dog.sound();  // Output: Bark
+        dog.eat();    // Output: Dog is eating
+
+        Animal cat = new Cat();  // Create an instance of Cat
+        cat.sound();  // Output: Meow
+        cat.eat();    // Output: Cat is eating
+    }
+}
