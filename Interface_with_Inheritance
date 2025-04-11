@@ -1,0 +1,38 @@
+// First Interface
+interface Animal {
+    void eat();  // Abstract method
+    void sleep(); // Abstract method
+}
+
+// Second Interface extending the first interface
+interface Mammal extends Animal {
+    void walk(); // New method in the Mammal interface
+}
+
+// A class implementing the Mammal interface
+class Dog implements Mammal {
+    
+    @Override
+    public void eat() {
+        System.out.println("Dog is eating.");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Dog is sleeping.");
+    }
+
+    @Override
+    public void walk() {
+        System.out.println("Dog is walking.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog myDog = new Dog();
+        myDog.eat();    // Dog is eating.
+        myDog.sleep();  // Dog is sleeping.
+        myDog.walk();   // Dog is walking.
+    }
+}
