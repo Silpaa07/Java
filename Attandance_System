@@ -1,0 +1,64 @@
+import java.util.Scanner;
+
+class Student {
+    String name;
+    boolean isPresent;
+
+    // Constructor to initialize student name and attendance status
+    public Student(String name) {
+        this.name = name;
+        this.isPresent = false;  // Default is absent
+    }
+    
+    // Method to mark the student as present or absent
+    public void markAttendance(boolean present) {
+        this.isPresent = present;
+    }
+}
+
+public class AttendanceSystem {
+    
+    // Method to display attendance report
+    public static void displayAttendance(Student[] students) {
+        System.out.println("Attendance Report:");
+        for (Student student : students) {
+            String status = student.isPresent ? "Present" : "Absent";
+            System.out.println(student.name + " - " + status);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask the user how many students are there
+        System.out.print("Enter the number of students: ");
+        int numStudents = scanner.nextInt();
+        scanner.nextLine();  // Consume newline left by nextInt()
+
+        // Create an array of students
+        Student[] students = new Student[numStudents];
+
+        // Input student names
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("Enter the name of student " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+            students[i] = new Student(name);
+        }
+
+        // Mark attendance
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("Is " + students[i].name + " present? (yes/no): ");
+            String attendance = scanner.nextLine();
+            if (attendance.equalsIgnoreCase("yes")) {
+                students[i].markAttendance(true);  // Mark as present
+            } else {
+                students[i].markAttendance(false); // Mark as absent
+            }
+        }
+
+        // Display attendance report
+        displayAttendance(students);
+        
+        scanner.close();
+    }
+}
