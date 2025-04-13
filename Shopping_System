@@ -1,0 +1,139 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Product class
+class Product {
+    int id;
+    String name;
+    double price;
+
+    Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+}
+
+// Shopping cart item
+class CartItem {
+    Product product;
+    int quantity;
+
+    CartItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    double getTotalPrice() {
+        return product.price * quantity;
+    }
+}
+
+// Main Shopping System
+public class ShoppingSystem {
+    static ArrayList<Product> products = new ArrayList<>();
+    static ArrayList<CartItem> cart = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Sample products
+        products.add(new Product(1, "Laptop", 799.99));
+        products.add(new Product(2, "Smartphone", 499.99));
+        products.add(new Product(3, "Headphones", 59.99));
+        products.add(new Product(4, "Keyboard", 29.99));
+
+        int choice;
+        do {
+            System.out.println("\n=== Shopping System Menu ===");
+            System.out.println("1. View Products");
+            System.out.println("2. Add to Cart");
+            System.out.println("3. View Cart");
+            System.out.println("4. Checkout");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    viewProducts();
+                    break;
+                case 2:
+                    addToCart(scanner);
+                    break;
+                case 3:
+                    viewCart();
+                    break;
+                case 4:
+                    checkout();
+                    break;
+                case 5:
+                    System.out.println("Thank you for shopping with us!");
+                    break;
+                default:
+                    System.out.println("Invalid option. Try again.");
+            }
+        } while (choice != 5);
+
+        scanner.close();
+    }
+
+    // View available products
+    static void viewProducts() {
+        System.out.println("\nAvailable Products:");
+        for (Product p : products) {
+            System.out.printf("ID: %d | Name: %s | Price: $%.2f\n", p.id, p.name, p.price);
+        }
+    }
+
+    // Add product to cart
+    static void addToCart(Scanner scanner) {
+        System.out.print("Enter product ID to add: ");
+        int id = scanner.nextInt();
+        Product selected = null;
+        for (Product p : products) {
+            if (p.id == id) {
+                selected = p;
+                break;
+            }
+        }
+
+        if (selected != null) {
+            System.out.print("Enter quantity: ");
+            int qty = scanner.nextInt();
+            cart.add(new CartItem(selected, qty));
+            System.out.println("Added to cart.");
+        } else {
+            System.out.println("Product not found.");
+        }
+    }
+
+    // View cart items
+    static void viewCart() {
+        if (cart.isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return;
+        }
+
+        System.out.println("\nCart Contents:");
+        double total = 0;
+        for (CartItem item : cart) {
+            double itemTotal = item.getTotalPrice();
+            System.out.printf("%s x %d = $%.2f\n", item.product.name, item.quantity, itemTotal);
+            total += itemTotal;
+        }
+        System.out.printf("Total: $%.2f\n", total);
+    }
+
+    // Checkout
+    static void checkout() {
+        if (cart.isEmpty()) {
+            System.out.println("Cart is empty. Add items before checking out.");
+        } else {
+            viewCart();
+            System.out.println("Proceeding to checkout...");
+            cart.clear();
+            System.out.println("Thank you for your purchase!");
+        }
+    }
+}
